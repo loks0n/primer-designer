@@ -1,13 +1,17 @@
 import unittest
 from primer_designer.sequence import (
     DNA,
-    validate_dna, gc_content, reverse_complement,
-    translate, protein_to_codons,
-    salt_correction, melting_temperature
+    validate_dna,
+    gc_content,
+    reverse_complement,
+    translate,
+    protein_to_codons,
+    salt_correction,
+    melting_temperature,
 )
 
-class TestSequence(unittest.TestCase):
 
+class TestSequence(unittest.TestCase):
     def test_validate_dna(self):
         # Valid DNA sequences
         self.assertEqual(validate_dna("ACGT"), "ACGT")
@@ -50,17 +54,17 @@ class TestSequence(unittest.TestCase):
 
     def test_protein_to_codons(self):
         # Single amino acid
-        self.assertEqual(protein_to_codons("A"), ['GCT', 'GCC', 'GCA', 'GCG'])
+        self.assertEqual(protein_to_codons("A"), ["GCT", "GCC", "GCA", "GCG"])
 
         # Edge cases
         with self.assertRaises(ValueError):
             protein_to_codons("X")  # Non-standard amino acid
 
         # Case insensitivity
-        self.assertEqual(protein_to_codons("a"), ['GCT', 'GCC', 'GCA', 'GCG'])
+        self.assertEqual(protein_to_codons("a"), ["GCT", "GCC", "GCA", "GCG"])
 
         # Stop codon
-        self.assertEqual(protein_to_codons("*"), ['TAA', 'TAG', 'TGA'])
+        self.assertEqual(protein_to_codons("*"), ["TAA", "TAG", "TGA"])
 
     def test_salt_correction(self):
         # Basic test
@@ -76,7 +80,7 @@ class TestSequence(unittest.TestCase):
         # Empty sequence
         with self.assertRaises(ValueError):
             salt_correction(DNA(""), Na=50)
-            
+
         # Negative ion concentration
         with self.assertRaises(ValueError):
             salt_correction(DNA("ACGT"), Na=-1)
@@ -110,7 +114,7 @@ class TestSequence(unittest.TestCase):
         tm_selfcomp = melting_temperature(DNA("ACGT"), selfcomp=True)
         tm_normal = melting_temperature(DNA("ACGT"), selfcomp=False)
         self.assertNotEqual(tm_selfcomp, tm_normal)
-        
+
         # Edge cases
         # Very short sequence
         tm = melting_temperature(DNA("AT"))
@@ -120,5 +124,7 @@ class TestSequence(unittest.TestCase):
         # This should use the approximation warning
         tm = melting_temperature(DNA("ATCGATCG"))
         self.assertIsInstance(tm, float)
+
+
 if __name__ == "__main__":
     unittest.main()

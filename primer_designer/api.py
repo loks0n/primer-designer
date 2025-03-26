@@ -18,6 +18,7 @@ app = FastAPI(
     version="0.1.0",
 )
 
+
 class PrimerDesignRequest(BaseModel):
     sequence: str
     mutations: List[str]
@@ -30,6 +31,7 @@ class PrimerDesignRequest(BaseModel):
     min_gc: float = 35.0
     max_gc: float = 70.0
     optimal_gc: float = 50.0
+
 
 @app.post("/primers", response_model=List[Dict[str, Any]])
 async def design_primers_endpoint(request: PrimerDesignRequest) -> List[Dict[str, Any]]:
@@ -57,7 +59,9 @@ async def design_primers_endpoint(request: PrimerDesignRequest) -> List[Dict[str
         try:
             mutations = parse_mutations(request.mutations)
         except Exception as e:
-            raise HTTPException(status_code=400, detail=f"Failed to parse mutations: {str(e)}")
+            raise HTTPException(
+                status_code=400, detail=f"Failed to parse mutations: {str(e)}"
+            )
 
         # Design primers
         results = design_primers(
@@ -71,13 +75,14 @@ async def design_primers_endpoint(request: PrimerDesignRequest) -> List[Dict[str
             max_tm_diff=request.max_tm_diff,
             min_gc=request.min_gc,
             max_gc=request.max_gc,
-            optimal_gc=request.optimal_gc
+            optimal_gc=request.optimal_gc,
         )
 
         return results
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
 
 if __name__ == "__main__":
     uvicorn.run("primer_designer.api:app", host="0.0.0.0", port=8000, reload=True)
