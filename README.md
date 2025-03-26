@@ -1,4 +1,9 @@
-# Primer Designer
+# primer-designer
+
+[![Tests](https://github.com/loks0n/primer-designer/actions/workflows/test.yml/badge.svg)](https://github.com/loks0n/primer-designer/actions/workflows/test.yml)
+[![PyPI version](https://img.shields.io/pypi/v/primer-designer.svg)](https://pypi.org/project/primer-designer/)
+[![Python Version](https://img.shields.io/pypi/pyversions/primer-designer.svg)](https://pypi.org/project/primer-designer/)
+[![License](https://img.shields.io/github/license/loks0n/primer-designer.svg)](https://github.com/loks0n/primer-designer/blob/main/LICENSE)
 
 A tool for designing site-directed mutagenesis primers for GPCR sequences or other protein-coding DNA sequences.
 
@@ -12,13 +17,21 @@ A tool for designing site-directed mutagenesis primers for GPCR sequences or oth
 
 ## Installation
 
+### From PyPI
+
+```bash
+pip install primer-designer
+```
+
+### From Source
+
 ```bash
 # Clone the repository
 git clone https://github.com/loks0n/primer-designer.git
 cd primer-designer
 
-# Install dependencies using uv
-uv pip install -e .
+# Install in development mode
+pip install -e .
 ```
 
 ## Requirements
@@ -28,8 +41,10 @@ uv pip install -e .
 
 ## Usage
 
+### As a Python Library
+
 ```python
-from primer_designer.main import design_mutagenesis_primers
+from primer_designer.core import design_mutagenesis_primers
 
 # Your DNA sequence
 dna_sequence = "ATGAACGGGACCGCCAGCGTGGCGCTGTTCAACCTGGCCATTGCTGATCGCTACCTGGCCATCGTCCTCTCTGCC..."
@@ -49,6 +64,16 @@ for result in primer_results:
     print(f"\nMutation: {result['mutation']}")
     print(f"Forward primer: 5'-{result['forward_primer']}-3'")
     print(f"Reverse primer: 5'-{result['reverse_primer']}-3'")
+```
+
+### Command Line Interface
+
+```bash
+# Basic usage
+primer-designer ATGAACGGGACC... F10A G86D Y138S
+
+# Output as JSON
+primer-designer --json ATGAACGGGACC... F10A G86D Y138S
 ```
 
 ## How it works

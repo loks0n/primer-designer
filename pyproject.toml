@@ -1,9 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "primer-designer"
 version = "0.1.0"
-description = "Add your description here"
+description = "A tool for designing site-directed mutagenesis primers"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = [
-    "biopython>=1.85",
+license = { file = "LICENSE" }
+authors = [
+    { name = "loks0n" }
 ]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "fastapi>=0.115.12",
+    "typing-extensions>=4.13.0",
+    "uvicorn[standard]>=0.34.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.11.2",
+    "pyright>=1.1.398",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/loks0n/primer-designer"
+"Bug Tracker" = "https://github.com/loks0n/primer-designer/issues"
+
+[project.scripts]
+primer-designer = "primer_designer.cli:main"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
