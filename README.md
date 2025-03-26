@@ -42,7 +42,6 @@ pip install -e .
 - Python 3.13+
 - FastAPI 0.115.12+
 - uvicorn 0.34.0+
-- typing-extensions 4.13.0+
 
 ## Usage
 
@@ -66,7 +65,7 @@ primer_results = design_primers(dna_sequence, mutations)
 
 # Design primers with custom parameters
 primer_results = design_primers(
-    dna_sequence, 
+    dna_sequence,
     mutations,
     min_flank_length=12,
     max_flank_length=20,
